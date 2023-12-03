@@ -2,7 +2,9 @@
 title: "r_intro PS 2"
 author: "Nicholus Tint Zaw"
 date: "2022-11-10"
-output: pdf_document
+output:
+  html_document:
+    df_print: paged
 ---
 
 ```{r setup, include=FALSE}
@@ -59,4 +61,41 @@ iris %>%
   group_by(Species) %>%
   summarise(mean = mean(Sepal.Length))
 
+```
+###list1
+```{r}
+df <- iris
+means_list <- replicate(n = 100, expr = mean(sample(df$Sepal.Length, size = 10, replace=TRUE)))
+test <- rep(1, times = 100)
+mean_list_1 <- data.frame(cbind(test, means_list))
+```
+###list2
+```{r}
+means_list_1 <- replicate(n = 200, expr = mean(sample(df$Sepal.Length, size = 30, replace=TRUE)))
+test <- rep(2, times = 100)
+mean_list_2 <- data.frame(cbind(test, means_list_1))
+```
+###list3
+```{r}
+means_list_2 <- replicate(n = 1000, expr = mean(sample(df$Sepal.Length, size = 50, replace=TRUE)))
+test <- rep(3, times = 100)
+mean_list_3 <- data.frame(cbind(test, means_list_2))
+```
+###list4
+```{r}
+means_list_3 <- replicate(n = 3000, expr = mean(sample(df$Sepal.Length, size = 50, replace=TRUE)))
+test <- rep(4, times = 100)
+mean_list_4 <- data.frame(cbind(test, means_list_3))
+```
+###list5
+```{r}
+means_list_4 <- replicate(n = 10000, expr = mean(sample(df$Sepal.Length, size = 50, replace=TRUE)))
+test <- rep(5, times = 100)
+mean_list_5 <- data.frame(cbind(test, means_list_4))
+```
+
+```{r}
+means_series <- list(mean_list_1, mean_list_2, mean_list_3, mean_list_4, mean_list_5)
+df_means_combined <- bind_rows(means_series)
+df_means_combined
 ```
